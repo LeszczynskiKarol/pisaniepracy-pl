@@ -50,8 +50,13 @@ html.dark {
 }
 
 /* ──────────────────────────────────────────────────
-   Base
+   Base — MUSI być w @layer base, żeby utility Tailwind
+   (np. text-[var(--color-accent-fg)] na przyciskach <a>)
+   wygrywały z bazową regułą `a { color }`. Reguły poza
+   warstwą biją wszystkie warstwy → przyciski miały tekst
+   w kolorze akcentu = identycznym z tłem.
    ────────────────────────────────────────────────── */
+@layer base {
 html {
   scroll-behavior: smooth;
   -webkit-text-size-adjust: 100%;
@@ -99,6 +104,7 @@ a {
   transition: opacity 200ms, color 200ms;
 }
 a:hover { color: var(--color-accent-hover); }
+} /* end @layer base */
 
 /* Underline TYLKO w treści prose / artykułach — nie w nav, kartach, buttonach. */
 .prose a, article a, [data-prose] a {
