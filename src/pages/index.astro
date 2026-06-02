@@ -1,0 +1,239 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+import IconBadge from "../components/IconBadge.astro";
+import FeatureCard from "../components/FeatureCard.astro";
+import StatBlock from "../components/StatBlock.astro";
+import HeroIllustration from "../components/HeroIllustration.astro";
+import BackgroundDecor from "../components/BackgroundDecor.astro";
+import DecisionSplitter from "../components/DecisionSplitter.astro";
+import ArticleCard from "../components/ArticleCard.astro";
+import Icon from "../components/Icon.astro";
+import { siteConfig } from "../config/site";
+import { getPosts } from "../lib/posts";
+
+const latest = (await getPosts()).slice(0, 3);
+
+const stats = [
+  { value: "3", label: "ścieżki do wyboru", accent: true },
+  { value: "Lic + Mgr", label: "oba typy pracy" },
+  { value: "od 29 zł", label: "gotowy poradnik" },
+  { value: "0 zł", label: "wiedza tutaj" },
+];
+
+const features = [
+  { icon: "compass", title: "Zrozumiesz proces", text: "Cały przebieg pisania pracy — od tematu po obronę — rozłożony na zrozumiałe etapy." },
+  { icon: "wallet", title: "Policzysz koszt i czas", text: "Realne widełki cen i czasu dla każdej drogi. Bez marketingowych obietnic." },
+  { icon: "git-branch", title: "Wybierzesz drogę", text: "Porównanie: napisać samemu, zlecić czy wygenerować z AI — z plusami i minusami." },
+  { icon: "list-checks", title: "Unikniesz błędów", text: "Najczęstsze pułapki, które kosztują studentów rundy poprawek i nerwy.", accent: "highlight" },
+  { icon: "message", title: "Dogadasz się z promotorem", text: "Jak prowadzić rozmowy i konsultacje, żeby nie utknąć między spotkaniami." },
+  { icon: "scale", title: "Sprawdzisz, co legalne", text: "Fakty i mity wokół zlecania pracy i wspomagania się narzędziami." },
+];
+
+const steps = [
+  { t: "Temat i plan", d: "Zawęź temat i ułóż spis treści, zanim napiszesz pierwsze zdanie." },
+  { t: "Research i metodologia", d: "Zbierz źródła i dobierz metodę pod pytanie badawcze." },
+  { t: "Pisanie rozdziałów", d: "Pisz partiami według planu — nie zaczynaj od wstępu." },
+  { t: "Redakcja i obrona", d: "Dopracuj całość, sprawdź formatowanie, przygotuj się na pytania." },
+];
+
+const faq = [
+  {
+    q: "Od czego zacząć pisanie pracy dyplomowej?",
+    a: "Od zawężenia tematu i ułożenia planu (spisu treści). Dopiero mając szkielet, zbierasz źródła i piszesz rozdziały — wstęp powstaje na końcu. Najtrudniejsza jest pusta kartka, więc kluczem jest rozbicie pracy na małe, konkretne kroki.",
+  },
+  {
+    q: "Ile kosztuje napisanie pracy?",
+    a: "To zależy od drogi: samodzielnie płacisz głównie własnym czasem, narzędzia AI działają zwykle w modelu subskrypcyjnym, a zlecenie jest najdroższe i zależy od kierunku oraz terminu. Największy koszt generuje zwlekanie — presja terminu podnosi cenę każdej opcji.",
+  },
+  {
+    q: "Napisać samemu, zlecić czy użyć AI?",
+    a: "Jeśli masz czas i chcesz mieć pełną kontrolę — pisz sam, najlepiej z gotowym poradnikiem krok po kroku. Jeśli goni Cię termin, narzędzia AI przyspieszają przygotowanie szkicu i rozdziałów. Wybór zależy od typu pracy i tego, ile chcesz zrobić samodzielnie.",
+  },
+  {
+    q: "Czy korzystanie z narzędzi AI przy pracy jest dozwolone?",
+    a: "Narzędzia AI mogą wspierać research, porządkowanie notatek i tworzenie szkiców. Granice wyznacza regulamin uczelni i zasady samodzielności pracy — odpowiedzialność za finalny tekst zawsze leży po stronie autora. Traktuj AI jak wsparcie procesu, nie zamiennik własnej pracy.",
+  },
+];
+
+const jsonLd = [
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    name: siteConfig.name,
+    url: siteConfig.url,
+    description: siteConfig.description,
+    inLanguage: "pl-PL",
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    name: siteConfig.name,
+    url: siteConfig.url,
+    description: siteConfig.tagline,
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: faq.map((f) => ({
+      "@type": "Question",
+      name: f.q,
+      acceptedAnswer: { "@type": "Answer", text: f.a },
+    })),
+  },
+];
+---
+
+<BaseLayout title={siteConfig.name} description={siteConfig.description} jsonLd={jsonLd}>
+  <Header />
+
+  <main id="main">
+    {/* ════════ HERO ════════ */}
+    <section class="relative overflow-hidden border-b border-[var(--color-border)]">
+      <BackgroundDecor variant="mesh" intensity="subtle" />
+      <div class="relative mx-auto grid max-w-6xl gap-12 px-4 py-16 sm:px-6 md:grid-cols-2 md:items-center md:py-24 lg:px-8">
+        <div>
+          <p class="eyebrow">Przewodnik 2026</p>
+          <h1 class="mt-5 text-[length:var(--text-fs-display)] font-extrabold leading-[1.04] tracking-[-0.03em]">
+            Pisanie pracy dyplomowej <span class="text-gradient-accent">bez chaosu</span>
+          </h1>
+          <p class="mt-6 max-w-[52ch] text-lg leading-relaxed text-[var(--color-text-muted)]">
+            Jeden przewodnik po całym procesie — licencjat i magisterka. Zrozum etapy,
+            policz koszt i czas, a potem wybierz drogę: napisz samodzielnie albo skorzystaj z narzędzi.
+          </p>
+          <div class="mt-9 flex flex-wrap items-center gap-3">
+            <a
+              href="#sciezki"
+              class="inline-flex items-center gap-2 rounded-lg bg-[var(--color-accent)] px-6 py-3 text-base font-semibold text-[var(--color-accent-fg)] no-underline transition-colors hover:bg-[var(--color-accent-hover)]"
+            >
+              Którą drogą iść?
+              <Icon name="arrow-right" class="h-4 w-4" />
+            </a>
+            <a
+              href="#przewodnik"
+              class="inline-flex items-center gap-2 rounded-lg border border-[var(--color-border)] bg-[var(--color-bg-elevated)] px-6 py-3 text-base font-medium text-[var(--color-text)] no-underline transition-colors hover:bg-[var(--color-bg-subtle)]"
+            >
+              Zobacz przewodnik
+            </a>
+          </div>
+        </div>
+        <div class="relative">
+          <HeroIllustration variant="conceptual" />
+        </div>
+      </div>
+    </section>
+
+    {/* ════════ STAT ROW ════════ */}
+    <section class="border-b border-[var(--color-border)] bg-[var(--color-bg-elevated)]">
+      <div class="mx-auto grid max-w-6xl grid-cols-2 gap-x-6 gap-y-8 px-4 py-12 sm:grid-cols-4 sm:px-6 lg:px-8">
+        {stats.map((s) => <StatBlock value={s.value} label={s.label} accent={s.accent} />)}
+      </div>
+    </section>
+
+    {/* ════════ PRZEWODNIK — co tu znajdziesz ════════ */}
+    <section id="przewodnik" class="border-b border-[var(--color-border)]">
+      <div class="mx-auto max-w-6xl px-4 py-18 sm:px-6 lg:px-8 lg:py-26">
+        <div class="max-w-2xl">
+          <IconBadge icon="compass" label="Co tu znajdziesz" tone="accent" />
+          <h2 class="mt-4 text-[length:var(--text-fs-h2)] font-bold leading-tight tracking-tight">
+            Wszystko, co musisz ustalić, zanim zaczniesz pisać
+          </h2>
+          <p class="mt-4 text-lg text-[var(--color-text-muted)]">
+            Zamiast szukać po dziesięciu forach — jeden uporządkowany przewodnik po decyzjach,
+            kosztach i procesie pisania pracy.
+          </p>
+        </div>
+        <div class="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          {features.map((f) => (
+            <FeatureCard icon={f.icon} title={f.title} text={f.text} accent={f.accent || "default"} />
+          ))}
+        </div>
+      </div>
+    </section>
+
+    {/* ════════ PROCES — 4 kroki ════════ */}
+    <section class="relative overflow-hidden border-b border-[var(--color-border)] bg-[var(--color-bg-subtle)]">
+      <BackgroundDecor variant="dots" intensity="subtle" />
+      <div class="relative mx-auto max-w-6xl px-4 py-18 sm:px-6 lg:px-8 lg:py-26">
+        <div class="max-w-2xl">
+          <IconBadge icon="git-branch" label="Jak to działa" tone="muted" />
+          <h2 class="mt-4 text-[length:var(--text-fs-h2)] font-bold leading-tight tracking-tight">
+            Pisanie pracy w czterech krokach
+          </h2>
+        </div>
+        <ol class="mt-12 grid gap-6 md:grid-cols-2 lg:grid-cols-4">
+          {steps.map((s, i) => (
+            <li class="relative flex flex-col gap-3 rounded-xl border border-[var(--color-border)] bg-[var(--color-bg-elevated)] p-6">
+              <span class="font-mono text-3xl font-bold text-[var(--color-accent)]/35">0{i + 1}</span>
+              <h3 class="text-lg font-semibold leading-snug">{s.t}</h3>
+              <p class="text-[0.9375rem] leading-relaxed text-[var(--color-text-muted)]">{s.d}</p>
+            </li>
+          ))}
+        </ol>
+      </div>
+    </section>
+
+    {/* ════════ ROZDZIELACZ DECYZYJNY ════════ */}
+    <section id="sciezki" class="border-b border-[var(--color-border)]">
+      <div class="mx-auto max-w-6xl px-4 py-18 sm:px-6 lg:px-8 lg:py-26">
+        <DecisionSplitter />
+      </div>
+    </section>
+
+    {/* ════════ BLOG TEASER ════════ */}
+    <section id="blog-teaser" class="border-b border-[var(--color-border)] bg-[var(--color-bg-elevated)]">
+      <div class="mx-auto max-w-6xl px-4 py-18 sm:px-6 lg:px-8 lg:py-24">
+        <div class="flex flex-wrap items-end justify-between gap-4">
+          <div class="max-w-2xl">
+            <IconBadge icon="book-open" label="Z bloga" tone="accent" />
+            <h2 class="mt-4 text-[length:var(--text-fs-h2)] font-bold leading-tight tracking-tight">
+              Pogłębione przewodniki
+            </h2>
+          </div>
+          <a href="/blog" class="inline-flex items-center gap-1.5 text-sm font-semibold text-[var(--color-accent)] no-underline hover:underline">
+            Wszystkie artykuły
+            <Icon name="arrow-right" class="h-4 w-4" />
+          </a>
+        </div>
+
+        {latest.length === 0 ? (
+          <div class="mt-10 rounded-2xl border border-dashed border-[var(--color-border)] p-10 text-center">
+            <p class="text-lg font-semibold">Pierwsze artykuły już w drodze</p>
+            <p class="mx-auto mt-2 max-w-md text-[var(--color-text-muted)]">
+              Przygotowujemy przewodniki o kosztach, harmonogramie i wyborze ścieżki.
+              Tymczasem zacznij od <a href="#sciezki" class="font-medium text-[var(--color-accent)] no-underline hover:underline">wyboru drogi</a>.
+            </p>
+          </div>
+        ) : (
+          <div class="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            {latest.map((p) => <ArticleCard post={p} />)}
+          </div>
+        )}
+      </div>
+    </section>
+
+    {/* ════════ FAQ ════════ */}
+    <section id="faq">
+      <div class="mx-auto max-w-3xl px-4 py-18 sm:px-6 lg:py-26">
+        <div class="text-center">
+          <IconBadge icon="message" label="FAQ" tone="accent" />
+          <h2 class="mt-4 text-[length:var(--text-fs-h2)] font-bold tracking-tight">Najczęstsze pytania</h2>
+        </div>
+        <div class="mt-10 divide-y divide-[var(--color-border)] overflow-hidden rounded-2xl border border-[var(--color-border)] bg-[var(--color-bg-elevated)]">
+          {faq.map((f) => (
+            <details class="group">
+              <summary class="flex cursor-pointer list-none items-center justify-between gap-4 px-6 py-5 text-left font-semibold text-[var(--color-text)] [&::-webkit-details-marker]:hidden">
+                {f.q}
+                <Icon name="chevron-down" class="h-5 w-5 shrink-0 text-[var(--color-text-faint)] transition-transform group-open:rotate-180" />
+              </summary>
+              <div class="px-6 pb-6 text-[var(--color-text-muted)]">{f.a}</div>
+            </details>
+          ))}
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <Footer />
+</BaseLayout>

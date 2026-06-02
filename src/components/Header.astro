@@ -1,0 +1,104 @@
+---
+// Header — wspólny dla wszystkich stron (home, blog, artykuły, legal).
+import Logo from "./Logo.astro";
+import ThemeToggle from "./ThemeToggle.astro";
+import Icon from "./Icon.astro";
+
+const nav = [
+  { label: "Przewodnik", href: "/#przewodnik" },
+  { label: "Którą drogą?", href: "/#sciezki" },
+  { label: "FAQ", href: "/#faq" },
+  { label: "Blog", href: "/blog" },
+];
+---
+
+<header class="sticky top-0 z-40 border-b border-[var(--color-border)] bg-[var(--color-bg)]/85 backdrop-blur">
+  <div class="mx-auto flex max-w-6xl items-center justify-between gap-4 px-4 py-3 sm:px-6 lg:px-8">
+    <Logo />
+
+    <nav aria-label="Główne" class="hidden items-center gap-7 md:flex">
+      {nav.map((n) => (
+        <a
+          href={n.href}
+          class="text-[0.9375rem] text-[var(--color-text-muted)] no-underline transition-colors hover:text-[var(--color-text)]"
+        >
+          {n.label}
+        </a>
+      ))}
+      <ThemeToggle />
+      <a
+        href="/#sciezki"
+        class="inline-flex items-center gap-1.5 rounded-lg bg-[var(--color-accent)] px-4 py-2 text-sm font-semibold text-[var(--color-accent-fg)] no-underline transition-colors hover:bg-[var(--color-accent-hover)]"
+      >
+        Wybierz ścieżkę
+        <Icon name="arrow-right" class="h-4 w-4" />
+      </a>
+    </nav>
+
+    <div class="flex items-center gap-1.5 md:hidden">
+      <ThemeToggle />
+      <button
+        id="menu-toggle"
+        type="button"
+        aria-label="Otwórz menu"
+        aria-expanded="false"
+        aria-controls="mobile-menu"
+        class="inline-flex h-10 w-10 items-center justify-center rounded-lg border border-[var(--color-border)] text-[var(--color-text)]"
+      >
+        <Icon name="menu" id="menu-icon-open" class="h-5 w-5" />
+        <Icon name="x" id="menu-icon-close" class="hidden h-5 w-5" />
+      </button>
+    </div>
+  </div>
+
+  <!-- Mobile panel -->
+  <div id="mobile-menu" hidden class="border-t border-[var(--color-border)] bg-[var(--color-bg-elevated)] md:hidden">
+    <nav aria-label="Mobilne" class="mx-auto flex max-w-6xl flex-col gap-1 px-4 py-3 sm:px-6">
+      {nav.map((n) => (
+        <a
+          href={n.href}
+          class="rounded-lg px-3 py-2.5 text-base text-[var(--color-text)] no-underline hover:bg-[var(--color-bg-subtle)]"
+        >
+          {n.label}
+        </a>
+      ))}
+      <a
+        href="/#sciezki"
+        class="mt-1 inline-flex items-center justify-center gap-1.5 rounded-lg bg-[var(--color-accent)] px-4 py-2.5 text-base font-semibold text-[var(--color-accent-fg)] no-underline"
+      >
+        Wybierz ścieżkę
+        <Icon name="arrow-right" class="h-4 w-4" />
+      </a>
+    </nav>
+  </div>
+</header>
+
+<script>
+  const btn = document.getElementById("menu-toggle");
+  const menu = document.getElementById("mobile-menu");
+  const iconOpen = document.getElementById("menu-icon-open");
+  const iconClose = document.getElementById("menu-icon-close");
+  btn?.addEventListener("click", () => {
+    const open = menu?.hasAttribute("hidden");
+    if (open) {
+      menu?.removeAttribute("hidden");
+      btn.setAttribute("aria-expanded", "true");
+      iconOpen?.classList.add("hidden");
+      iconClose?.classList.remove("hidden");
+    } else {
+      menu?.setAttribute("hidden", "");
+      btn.setAttribute("aria-expanded", "false");
+      iconOpen?.classList.remove("hidden");
+      iconClose?.classList.add("hidden");
+    }
+  });
+  // Zamknij po kliknięciu w link
+  menu?.querySelectorAll("a").forEach((a) =>
+    a.addEventListener("click", () => {
+      menu.setAttribute("hidden", "");
+      btn?.setAttribute("aria-expanded", "false");
+      iconOpen?.classList.remove("hidden");
+      iconClose?.classList.add("hidden");
+    }),
+  );
+</script>

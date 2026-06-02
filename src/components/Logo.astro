@@ -1,0 +1,40 @@
+---
+// Logo — pisaniepracy.pl. Wordmark + autorski znak: dokument z piórem
+// w gradiencie indigo→violet (nie generic "rectangle + line").
+import { siteConfig } from "../config/site";
+
+interface Props {
+  variant?: "default" | "compact";
+  href?: string;
+}
+
+const { variant = "default", href = "/" } = Astro.props;
+
+// "Pisaniepracy.pl" → base "pisaniepracy" + tld ".pl"
+const [base, ...tldParts] = siteConfig.name.toLowerCase().split(".");
+const tld = tldParts.length ? "." + tldParts.join(".") : "";
+---
+
+<a
+  href={href}
+  class="group inline-flex items-center gap-2.5 no-underline transition-opacity hover:opacity-90"
+  aria-label={`${siteConfig.name} — strona główna`}
+>
+  {/* Znak: dokument z piórem, gradient indigo→violet */}
+  <span
+    class="relative inline-flex h-9 w-9 items-center justify-center rounded-[0.6rem] bg-gradient-to-br from-[var(--color-accent)] to-[var(--color-accent-secondary)] text-[var(--color-accent-fg)] shadow-sm ring-1 ring-inset ring-white/15"
+    aria-hidden="true"
+  >
+    <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M13 4H7.5A1.5 1.5 0 0 0 6 5.5v13A1.5 1.5 0 0 0 7.5 20h9a1.5 1.5 0 0 0 1.5-1.5V9z" />
+      <path d="M13 4v5h5" />
+      <path d="m15.5 12.3-4 4-1.6.5.5-1.6 4-4a.8.8 0 0 1 1.1 1.1z" />
+    </svg>
+  </span>
+
+  {variant === "default" && (
+    <span class="font-sans text-[1.05rem] font-bold leading-none tracking-[-0.02em] text-[var(--color-text)]">
+      {base}<span class="text-[var(--color-accent)]">{tld}</span>
+    </span>
+  )}
+</a>

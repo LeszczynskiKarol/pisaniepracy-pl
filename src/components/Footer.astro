@@ -1,0 +1,58 @@
+---
+// Footer — wspólny. UWAGA: NIE umieszczamy tu odnośników polecających (rozdzielacz).
+// Rekomendacje pojawiają się WYŁĄCZNIE kontekstowo: na stronie głównej i w treści artykułów.
+import Logo from "./Logo.astro";
+import { siteConfig } from "../config/site";
+
+const year = new Date().getFullYear();
+---
+
+<footer class="border-t border-[var(--color-border)] bg-[var(--color-bg-elevated)]">
+  <div class="mx-auto grid max-w-6xl gap-10 px-4 py-14 sm:grid-cols-2 sm:px-6 lg:grid-cols-4 lg:px-8">
+    <div class="sm:col-span-2 lg:col-span-1">
+      <Logo />
+      <p class="mt-4 max-w-xs text-sm leading-relaxed text-[var(--color-text-muted)]">
+        Niezależny przewodnik po pisaniu pracy dyplomowej. Pomagamy wybrać drogę:
+        napisać samodzielnie, czy skorzystać z narzędzi.
+      </p>
+    </div>
+
+    <div>
+      <p class="text-xs font-semibold uppercase tracking-[0.1em] text-[var(--color-text-faint)]">Przewodnik</p>
+      <ul class="mt-4 space-y-2.5 text-sm">
+        <li><a href="/#przewodnik" class="text-[var(--color-text-muted)] no-underline hover:text-[var(--color-text)]">Jak to działa</a></li>
+        <li><a href="/#sciezki" class="text-[var(--color-text-muted)] no-underline hover:text-[var(--color-text)]">Którą drogą?</a></li>
+        <li><a href="/#faq" class="text-[var(--color-text-muted)] no-underline hover:text-[var(--color-text)]">Najczęstsze pytania</a></li>
+      </ul>
+    </div>
+
+    <div>
+      <p class="text-xs font-semibold uppercase tracking-[0.1em] text-[var(--color-text-faint)]">Blog</p>
+      <ul class="mt-4 space-y-2.5 text-sm">
+        <li><a href="/blog" class="text-[var(--color-text-muted)] no-underline hover:text-[var(--color-text)]">Wszystkie artykuły</a></li>
+        <li><a href="/blog/kategoria/proces" class="text-[var(--color-text-muted)] no-underline hover:text-[var(--color-text)]">Proces pisania</a></li>
+        <li><a href="/blog/kategoria/decyzja" class="text-[var(--color-text-muted)] no-underline hover:text-[var(--color-text)]">Koszty i decyzje</a></li>
+        <li><a href="/blog/kategoria/wsparcie" class="text-[var(--color-text-muted)] no-underline hover:text-[var(--color-text)]">Motywacja i wsparcie</a></li>
+      </ul>
+    </div>
+
+    <div>
+      <p class="text-xs font-semibold uppercase tracking-[0.1em] text-[var(--color-text-faint)]">Informacje</p>
+      <ul class="mt-4 space-y-2.5 text-sm">
+        <li><a href="/polityka-prywatnosci" class="text-[var(--color-text-muted)] no-underline hover:text-[var(--color-text)]">Polityka prywatności</a></li>
+        <li>
+          <a href={`mailto:${siteConfig.contact.email}`} class="text-[var(--color-text-muted)] no-underline hover:text-[var(--color-text)]">
+            {siteConfig.contact.email}
+          </a>
+        </li>
+        <li><a href="/rss.xml" class="text-[var(--color-text-muted)] no-underline hover:text-[var(--color-text)]">Kanał RSS</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="border-t border-[var(--color-border)]">
+    <div class="mx-auto max-w-6xl px-4 py-5 text-xs text-[var(--color-text-faint)] sm:px-6 lg:px-8">
+      © {year} {siteConfig.name}. Treści mają charakter informacyjny i edukacyjny.
+    </div>
+  </div>
+</footer>

@@ -1,0 +1,128 @@
+---
+import { render } from "astro:content";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import Header from "../../components/Header.astro";
+import Footer from "../../components/Footer.astro";
+import DecisionSplitter from "../../components/DecisionSplitter.astro";
+import ArticleCard from "../../components/ArticleCard.astro";
+import Icon from "../../components/Icon.astro";
+import { getPosts, getRelated, readingTimeFromBody, formatDatePl, type Post } from "../../lib/posts";
+import { CLUSTERS } from "../../config/clusters";
+import { siteConfig } from "../../config/site";
+
+export async function getStaticPaths() {
+  const posts = await getPosts();
+  return posts.map((post) => ({ params: { slug: post.id }, props: { post } }));
+}
+
+interface Props { post: Post }
+const { post } = Astro.props;
+const { Content } = await render(post);
+
+const c = CLUSTERS[post.data.cluster];
+const rt = readingTimeFromBody(post.body);
+const related = await getRelated(post, 3);
+const showSplitter = post.data.showSplitter ?? c.splitterByDefault;
+const onlyTargets = post.data.decisionTargets.length ? post.data.decisionTargets : undefined;
+const canonical = `${siteConfig.url}/blog/${post.id}/`;
+
+const jsonLd = [
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    headline: post.data.title,
+    description: post.data.description,
+    datePublished: post.data.pubDate.toISOString(),
+    dateModified: (post.data.updatedDate ?? post.data.pubDate).toISOString(),
+    author: { "@type": "Organization", name: post.data.author, url: siteConfig.url },
+    publisher: { "@type": "Organization", name: siteConfig.name, url: siteConfig.url },
+    mainEntityOfPage: canonical,
+    inLanguage: "pl-PL",
+    articleSection: c.label,
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "Strona główna", item: siteConfig.url },
+      { "@type": "ListItem", position: 2, name: "Blog", item: `${siteConfig.url}/blog` },
+      { "@type": "ListItem", position: 3, name: c.label, item: `${siteConfig.url}/blog/kategoria/${c.key}` },
+      { "@type": "ListItem", position: 4, name: post.data.title, item: canonical },
+    ],
+  },
+];
+---
+
+<BaseLayout
+  title={post.data.title}
+  description={post.data.description}
+  canonicalUrl={canonical}
+  jsonLd={jsonLd}
+>
+  <Header />
+  <main id="main">
+    <article>
+      {/* Nagłówek artykułu */}
+      <header class="border-b border-[var(--color-border)]">
+        <div class="mx-auto max-w-3xl px-4 py-12 sm:px-6 lg:py-16">
+          <nav aria-label="Okruszki" class="flex flex-wrap items-center gap-1.5 text-sm text-[var(--color-text-faint)]">
+            <a href="/blog" class="no-underline hover:text-[var(--color-text)]">Blog</a>
+            <span>/</span>
+            <a href={`/blog/kategoria/${c.key}/`} class="no-underline hover:text-[var(--color-text)]">{c.label}</a>
+          </nav>
+
+          <h1 class="mt-5 text-[length:var(--text-fs-h1)] font-bold leading-[1.1] tracking-tight">
+            {post.data.title}
+          </h1>
+          <p class="mt-4 text-lg text-[var(--color-text-muted)]">{post.data.description}</p>
+
+          <div class="mt-6 flex flex-wrap items-center gap-x-4 gap-y-2 text-sm text-[var(--color-text-faint)]">
+            <span class="inline-flex items-center gap-1.5">
+              <Icon name={c.icon} class="h-4 w-4 text-[var(--color-accent)]" />
+              {c.label}
+            </span>
+            <time datetime={post.data.pubDate.toISOString()}>{formatDatePl(post.data.pubDate)}</time>
+            <span>·</span>
+            <span>{rt}</span>
+            <span>·</span>
+            <span>{post.data.author}</span>
+          </div>
+        </div>
+      </header>
+
+      {/* Treść */}
+      <div class="mx-auto max-w-3xl px-4 py-10 sm:px-6 lg:py-14">
+        <div class="prose max-w-none" data-prose>
+          <Content />
+        </div>
+      </div>
+
+      {/* Rozdzielacz decyzyjny */}
+      {showSplitter && (
+        <section class="border-t border-[var(--color-border)] bg-[var(--color-bg-subtle)]">
+          <div class="mx-auto max-w-6xl px-4 py-14 sm:px-6 lg:px-8 lg:py-16">
+            <DecisionSplitter
+              compact
+              eyebrow="Twój następny krok"
+              title="Gotowy działać? Wybierz drogę"
+              only={onlyTargets}
+            />
+          </div>
+        </section>
+      )}
+    </article>
+
+    {/* Powiązane */}
+    {related.length > 0 && (
+      <section class="border-t border-[var(--color-border)]">
+        <div class="mx-auto max-w-6xl px-4 py-14 sm:px-6 lg:px-8">
+          <h2 class="text-2xl font-bold tracking-tight">Czytaj dalej</h2>
+          <div class="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            {related.map((p) => <ArticleCard post={p} />)}
+          </div>
+        </div>
+      </section>
+    )}
+  </main>
+  <Footer />
+</BaseLayout>

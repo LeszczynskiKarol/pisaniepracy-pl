@@ -1,0 +1,88 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import Header from "../../components/Header.astro";
+import Footer from "../../components/Footer.astro";
+import ArticleCard from "../../components/ArticleCard.astro";
+import IconBadge from "../../components/IconBadge.astro";
+import Icon from "../../components/Icon.astro";
+import BackgroundDecor from "../../components/BackgroundDecor.astro";
+import { getPosts } from "../../lib/posts";
+import { CLUSTERS, CLUSTER_ORDER } from "../../config/clusters";
+import { siteConfig } from "../../config/site";
+
+const posts = await getPosts();
+const featured = posts.find((p) => p.data.featured) ?? posts[0];
+const rest = posts.filter((p) => p.id !== featured?.id);
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Blog",
+  name: `Blog — ${siteConfig.name}`,
+  url: `${siteConfig.url}/blog`,
+  description: siteConfig.description,
+  inLanguage: "pl-PL",
+};
+---
+
+<BaseLayout
+  title="Blog — przewodniki o pisaniu pracy"
+  description="Artykuły o pisaniu pracy dyplomowej: proces krok po kroku, realne koszty i czas, oraz porównanie ścieżek — samodzielnie, na zlecenie czy z AI."
+  jsonLd={jsonLd}
+>
+  <Header />
+  <main id="main">
+    {/* Nagłówek */}
+    <section class="relative overflow-hidden border-b border-[var(--color-border)]">
+      <BackgroundDecor variant="mesh" intensity="subtle" />
+      <div class="relative mx-auto max-w-6xl px-4 py-16 sm:px-6 lg:px-8 lg:py-20">
+        <p class="eyebrow">Baza wiedzy</p>
+        <h1 class="mt-4 max-w-3xl text-[length:var(--text-fs-h1)] font-bold leading-[1.1] tracking-tight">
+          Wszystko o pisaniu pracy — <span class="text-gradient-accent">konkretnie</span>
+        </h1>
+        <p class="mt-5 max-w-2xl text-lg text-[var(--color-text-muted)]">
+          Proces, koszty, harmonogram i decyzje. Bez lania wody i bez „w dzisiejszych czasach”.
+        </p>
+
+        {/* Kategorie */}
+        <div class="mt-8 flex flex-wrap gap-2">
+          {CLUSTER_ORDER.map((k) => (
+            <a
+              href={`/blog/kategoria/${k}/`}
+              class="inline-flex items-center gap-1.5 rounded-full border border-[var(--color-border)] bg-[var(--color-bg-elevated)] px-3.5 py-1.5 text-sm font-medium text-[var(--color-text-muted)] no-underline transition-colors hover:border-[var(--color-accent)]/40 hover:text-[var(--color-text)]"
+            >
+              <Icon name={CLUSTERS[k].icon} class="h-4 w-4" />
+              {CLUSTERS[k].label}
+            </a>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    {/* Lista artykułów */}
+    <section class="mx-auto max-w-6xl px-4 py-14 sm:px-6 lg:px-8 lg:py-20">
+      {posts.length === 0 ? (
+        <div class="rounded-2xl border border-dashed border-[var(--color-border)] bg-[var(--color-bg-elevated)] p-12 text-center">
+          <IconBadge icon="pen" tone="accent" size="lg" />
+          <h2 class="mt-5 text-2xl font-bold tracking-tight">Wkrótce pierwsze artykuły</h2>
+          <p class="mx-auto mt-3 max-w-md text-[var(--color-text-muted)]">
+            Pracujemy nad przewodnikami: jak napisać pracę krok po kroku, ile to kosztuje
+            i którą drogę wybrać. Zajrzyj wkrótce albo zacznij od strony głównej.
+          </p>
+          <a
+            href="/#sciezki"
+            class="mt-6 inline-flex items-center gap-2 rounded-lg bg-[var(--color-accent)] px-5 py-2.5 text-sm font-semibold text-[var(--color-accent-fg)] no-underline hover:bg-[var(--color-accent-hover)]"
+          >
+            Wybierz swoją ścieżkę
+            <Icon name="arrow-right" class="h-4 w-4" />
+          </a>
+        </div>
+      ) : (
+        <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          {featured && <ArticleCard post={featured} featured />}
+          {rest.map((p) => <ArticleCard post={p} />)}
+        </div>
+      )}
+    </section>
+  </main>
+  <Footer />
+</BaseLayout>

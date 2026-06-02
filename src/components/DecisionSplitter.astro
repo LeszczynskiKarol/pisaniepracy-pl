@@ -1,0 +1,111 @@
+---
+// DecisionSplitter — "rozdzielacz decyzyjny". Trzy rekomendacje dobrane po TYPIE
+// pracy i intencji czytelnika (src/config/targets.ts).
+// Linki target=_blank rel=noopener (czytelnik zostaje na stronie).
+//
+// Użycie:
+//   <DecisionSplitter />                          // pełny, z domyślnym nagłówkiem
+//   <DecisionSplitter compact />                   // wersja na koniec artykułu
+//   <DecisionSplitter title="..." intro="..." />
+import { MONEY_TARGETS, DECISION_ORDER, TARGET_LINK_ATTRS, type TargetKey } from "../config/targets";
+import Icon from "./Icon.astro";
+import IconBadge from "./IconBadge.astro";
+
+interface Props {
+  title?: string;
+  intro?: string;
+  compact?: boolean;
+  /** eyebrow nad nagłówkiem */
+  eyebrow?: string;
+  /** ogranicz do wybranych celów (per-artykuł targeting) */
+  only?: TargetKey[];
+}
+
+const {
+  title = "Którą drogą chcesz pójść?",
+  intro = "Wybór zależy od typu pracy i tego, ile chcesz zrobić sam. Każda ścieżka prowadzi do konkretnego, sprawdzonego rozwiązania.",
+  compact = false,
+  eyebrow = "Trzy ścieżki",
+  only,
+} = Astro.props;
+
+const keys = only && only.length ? DECISION_ORDER.filter((k) => only.includes(k)) : DECISION_ORDER;
+const cards = keys.map((k) => MONEY_TARGETS[k]);
+---
+
+<div class="mx-auto max-w-6xl">
+  {!compact && (
+    <div class="max-w-2xl">
+      <IconBadge icon="git-branch" label={eyebrow} tone="accent" />
+      <h2 class="mt-4 text-[length:var(--text-fs-h2)] font-bold leading-tight tracking-tight">
+        {title}
+      </h2>
+      <p class="mt-4 text-lg text-[var(--color-text-muted)]">{intro}</p>
+    </div>
+  )}
+
+  {compact && (
+    <div class="mb-6">
+      <p class="eyebrow">{eyebrow}</p>
+      <h3 class="mt-3 text-[length:var(--text-fs-h3)] font-bold tracking-tight">{title}</h3>
+    </div>
+  )}
+
+  <div class={`grid gap-4 ${compact ? "mt-0" : "mt-10"} md:grid-cols-3`}>
+    {cards.map((t) => (
+      <div
+        class:list={[
+          "group relative flex flex-col rounded-2xl border bg-[var(--color-bg-elevated)] p-6 transition-all duration-200 hover:-translate-y-0.5 hover:shadow-lg",
+          t.mode === "ai"
+            ? "border-[var(--color-accent-secondary)]/40"
+            : "border-[var(--color-border)] hover:border-[var(--color-accent)]/45",
+        ]}
+      >
+        <div class="flex items-center justify-between">
+          <span
+            class="inline-flex h-12 w-12 items-center justify-center rounded-xl text-[var(--color-accent-fg)]"
+            style={
+              t.mode === "ai"
+                ? "background: linear-gradient(135deg, var(--color-accent-secondary), var(--color-accent));"
+                : "background: linear-gradient(135deg, var(--color-accent), var(--color-accent-secondary));"
+            }
+            aria-hidden="true"
+          >
+            <Icon name={t.icon} class="h-6 w-6" />
+          </span>
+          <span class="rounded-full border border-[var(--color-border)] px-2.5 py-1 text-[0.7rem] font-semibold uppercase tracking-[0.08em] text-[var(--color-text-faint)]">
+            {t.mode === "ai" ? "Zrób za mnie" : "Zrób sam"}
+          </span>
+        </div>
+
+        <p class="mt-5 text-sm font-medium text-[var(--color-text-muted)]">{t.intent}</p>
+        <h3 class="mt-1 text-xl font-bold tracking-tight text-[var(--color-text)]">{t.cardTitle}</h3>
+        <p class="mt-2 text-[0.9375rem] leading-relaxed text-[var(--color-text-muted)]">{t.cardDesc}</p>
+
+        <div class="mt-6 flex items-center justify-between gap-3 pt-2">
+          <a
+            href={t.url}
+            target={TARGET_LINK_ATTRS.target}
+            rel={TARGET_LINK_ATTRS.rel}
+            class="inline-flex items-center gap-1.5 rounded-lg bg-[var(--color-accent)] px-4 py-2.5 text-sm font-semibold text-[var(--color-accent-fg)] no-underline transition-colors hover:bg-[var(--color-accent-hover)]"
+          >
+            {t.ctaLabel}
+            <Icon name="arrow-up-right" class="h-4 w-4" />
+          </a>
+          {t.price && (
+            <span class="text-sm font-semibold text-[var(--color-text-faint)]">{t.price}</span>
+          )}
+        </div>
+      </div>
+    ))}
+  </div>
+
+  {!compact && (
+    <p class="mt-6 max-w-3xl text-sm text-[var(--color-text-faint)]">
+      Nie masz pewności? Zacznij od artykułu
+      <a href="/blog/kategoria/decyzja" class="font-medium text-[var(--color-accent)] no-underline hover:underline">
+        „samodzielnie vs zlecenie vs AI”
+      </a> — porównujemy koszt, czas i ryzyko każdej opcji.
+    </p>
+  )}
+</div>
