@@ -20,6 +20,7 @@ export const icons = {
   "x": `<path d="M6 6 18 18"/><path d="M18 6 6 18"/>`,
   "menu": `<path d="M4 7h16"/><path d="M4 12h16"/><path d="M4 17h16"/>`,
   "check": `<path d="m5 12 4 4 10-10"/>`,
+  "minus": `<path d="M5 12h14"/>`,
   "check-circle": `<circle cx="12" cy="12" r="9"/><path d="m8 12 3 3 5-6"/>`,
   "external-link": `<path d="M14 4h6v6"/><path d="M20 4 10 14"/><path d="M19 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1h5"/>`,
   "mail": `<rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/>`,

@@ -38,6 +38,22 @@ const steps = [
   { t: "Redakcja i obrona", d: "Dopracuj całość, sprawdź formatowanie, przygotuj się na pytania." },
 ];
 
+// Macierz porównawcza — trzy drogi wg tych samych kryteriów.
+const indTone: Record<string, string> = {
+  check: "text-emerald-500",
+  minus: "text-amber-500",
+  x: "text-rose-500",
+};
+const compareCols = ["Piszę sam", "Z pomocą AI", "Na zlecenie"];
+const compareRows: { k: string; v: [string, string][] }[] = [
+  { k: "Koszt", v: [["check", "Najniższy"], ["minus", "Niski — abonament"], ["x", "Najwyższy"]] },
+  { k: "Czas do szkicu", v: [["x", "Tygodnie"], ["check", "Godziny"], ["minus", "Zależny od terminu"]] },
+  { k: "Kontrola nad treścią", v: [["check", "Pełna"], ["check", "Wysoka"], ["x", "Ograniczona"]] },
+  { k: "Obrona", v: [["check", "Naturalna"], ["minus", "Po dopracowaniu"], ["x", "Trudna"]] },
+  { k: "Ryzyko", v: [["check", "Najniższe"], ["minus", "Weryfikuj źródła"], ["x", "Najwyższe"]] },
+];
+const compareBest = ["Masz czas i temat", "Goni Cię termin", "Mało czasu, większy budżet"];
+
 const faq = [
   {
     q: "Od czego zacząć pisanie pracy dyplomowej?",
@@ -171,6 +187,83 @@ const jsonLd = [
             </li>
           ))}
         </ol>
+      </div>
+    </section>
+
+    {/* ════════ MACIERZ PORÓWNAWCZA ════════ */}
+    <section class="border-b border-[var(--color-border)] bg-[var(--color-bg-elevated)]">
+      <div class="mx-auto max-w-6xl px-4 py-18 sm:px-6 lg:px-8 lg:py-26">
+        <div class="max-w-2xl">
+          <IconBadge icon="scale" label="Porównanie" tone="accent" />
+          <h2 class="mt-4 text-[length:var(--text-fs-h2)] font-bold leading-tight tracking-tight">
+            Trzy drogi obok siebie
+          </h2>
+          <p class="mt-4 text-lg text-[var(--color-text-muted)]">
+            Te same kryteria dla każdej metody — żeby decydować na chłodno, a nie pod presją terminu.
+          </p>
+        </div>
+
+        <div class="mt-10 overflow-x-auto rounded-2xl border border-[var(--color-border)]">
+          <table class="w-full min-w-[680px] border-collapse text-left text-sm">
+            <thead>
+              <tr class="bg-[var(--color-bg-subtle)]">
+                <th class="px-5 py-4 font-semibold text-[var(--color-text-muted)]">Kryterium</th>
+                {compareCols.map((c, i) => (
+                  <th
+                    class:list={[
+                      "px-5 py-4 font-bold",
+                      i === 1
+                        ? "bg-[var(--color-accent)]/8 text-[var(--color-accent)]"
+                        : "text-[var(--color-text)]",
+                    ]}
+                  >
+                    {c}
+                    {i === 1 && (
+                      <span class="ml-2 rounded-full bg-[var(--color-accent)]/15 px-2 py-0.5 text-[0.65rem] font-semibold uppercase tracking-wide align-middle">
+                        złoty środek
+                      </span>
+                    )}
+                  </th>
+                ))}
+              </tr>
+            </thead>
+            <tbody>
+              {compareRows.map((r) => (
+                <tr class="border-t border-[var(--color-border)]">
+                  <td class="px-5 py-4 font-medium text-[var(--color-text)]">{r.k}</td>
+                  {r.v.map(([icon, label], i) => (
+                    <td class:list={["px-5 py-4", i === 1 && "bg-[var(--color-accent)]/8"]}>
+                      <span class="inline-flex items-center gap-2">
+                        <Icon name={icon} class={`h-4 w-4 shrink-0 ${indTone[icon]}`} />
+                        <span class="text-[var(--color-text-muted)]">{label}</span>
+                      </span>
+                    </td>
+                  ))}
+                </tr>
+              ))}
+              <tr class="border-t border-[var(--color-border)] bg-[var(--color-bg-subtle)]/50">
+                <td class="px-5 py-4 font-medium text-[var(--color-text)]">Najlepsze, gdy</td>
+                {compareBest.map((b, i) => (
+                  <td
+                    class:list={[
+                      "px-5 py-4 font-medium text-[var(--color-text-muted)]",
+                      i === 1 && "bg-[var(--color-accent)]/8",
+                    ]}
+                  >
+                    {b}
+                  </td>
+                ))}
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <p class="mt-5 text-sm text-[var(--color-text-faint)]">
+          Chcesz głębiej? Zobacz
+          <a href="/blog/samemu-zlecenie-czy-ai/" class="font-medium text-[var(--color-accent)] no-underline hover:underline">pełne porównanie ścieżek</a>
+          i
+          <a href="/blog/ile-kosztuje-napisanie-pracy/" class="font-medium text-[var(--color-accent)] no-underline hover:underline">rozkład kosztów</a>.
+        </p>
       </div>
     </section>
 
