@@ -16,7 +16,7 @@ export const siteConfig = {
   // Krótki opis używany w meta/JSON-LD
   tagline: "Przewodnik po pisaniu pracy dyplomowej",
   description:
-    "Kompletny przewodnik po pisaniu pracy licencjackiej i magisterskiej — proces krok po kroku, realne koszty, harmonogram i porównanie ścieżek: napisać samemu, zlecić czy wygenerować AI.",
+    "Przewodnik po pisaniu pracy licencjackiej i magisterskiej: proces krok po kroku, realne koszty i porównanie ścieżek — samemu, na zlecenie czy z AI.",
 
   // Legal — UZUPEŁNIJ NIP / adres / nazwę administratora przed pełnym ruchem.
   // (Placeholdery oznaczone w LAUNCH-REPORT.md jako TODO Karola.)
