@@ -261,6 +261,109 @@ html.no-js .needs-js { display: none; }
 }
 .prose img { border-radius: 0.75rem; border: 1px solid var(--color-border); }
 
+/* Tabele w treści artykułów (markdown GFM) */
+.prose table {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: var(--font-sans);
+  font-size: 0.9375rem;
+  line-height: 1.5;
+}
+.prose thead th {
+  text-align: left;
+  font-weight: 600;
+  padding: 0.6rem 0.75rem;
+  border-bottom: 2px solid var(--color-accent);
+  color: var(--color-text);
+}
+.prose tbody td {
+  padding: 0.6rem 0.75rem;
+  border-bottom: 1px solid var(--color-border);
+  vertical-align: top;
+}
+.prose tbody tr:nth-child(even) { background: var(--color-bg-subtle); }
+
+/* Karty statystyk — wyróżnione liczby w treści */
+.prose .stat-row {
+  display: grid;
+  gap: 0.75rem;
+  grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr));
+  margin: 1.6em 0;
+}
+.prose .stat-card {
+  border: 1px solid var(--color-border);
+  border-radius: 0.75rem;
+  padding: 1rem 1.1rem;
+  background: var(--color-bg-elevated);
+  font-family: var(--font-sans);
+}
+.prose .stat-value {
+  display: block;
+  font-size: 1.6rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--color-accent);
+}
+.prose .stat-label {
+  display: block;
+  margin-top: 0.25rem;
+  font-size: 0.85rem;
+  color: var(--color-text-muted);
+}
+
+/* Oś czasu — etapy procesu / harmonogram */
+.prose ul.timeline {
+  list-style: none;
+  padding-left: 0;
+  position: relative;
+}
+.prose ul.timeline::before {
+  content: "";
+  position: absolute;
+  left: 0.45rem;
+  top: 0.4rem;
+  bottom: 0.4rem;
+  width: 2px;
+  background: var(--color-border);
+}
+.prose ul.timeline li {
+  position: relative;
+  padding-left: 2rem;
+  margin-top: 0.9em;
+}
+.prose ul.timeline li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.45em;
+  width: 0.95rem;
+  height: 0.95rem;
+  border-radius: 9999px;
+  background: var(--color-bg);
+  border: 3px solid var(--color-accent);
+}
+.prose .timeline-year {
+  font-family: var(--font-sans);
+  font-weight: 700;
+  color: var(--color-accent);
+  margin-right: 0.4rem;
+}
+
+/* Ramka na diagram/figurę z podpisem */
+.prose .figure-box {
+  border: 1px solid var(--color-border);
+  border-radius: 0.75rem;
+  padding: 1.25rem;
+  background: var(--color-bg-elevated);
+  margin: 1.6em 0;
+}
+.prose .figure-caption {
+  margin-top: 0.75rem;
+  font-family: var(--font-sans);
+  font-size: 0.85rem;
+  color: var(--color-text-faint);
+}
+
 /* Form controls (zostawione na wszelki wypadek; ta domena nie ma formularza) */
 .form-input {
   display: block;
