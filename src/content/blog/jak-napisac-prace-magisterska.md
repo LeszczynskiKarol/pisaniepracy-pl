@@ -1,6 +1,6 @@
 ---
-title: "Jak napisać pracę magisterską — czym różni się od licencjatu"
-description: "Magisterka to nie powiększony licencjat: inne wymogi ustawowe, obowiązkowe badania własne, dwa razy większa bibliografia. Co konkretnie się zmienia i jak to ugryźć."
+title: "Praca magisterska a licencjat — czym naprawdę się różni"
+description: "Magisterka to nie powiększony licencjat: inne wymogi ustawowe, obowiązkowe badania własne, dwa razy większa bibliografia. Porównujemy oba poziomy punkt po punkcie."
 pubDate: 2026-06-02
 updatedDate: 2026-06-11
 cluster: "proces"
@@ -67,7 +67,7 @@ Drobne, ale warte znajomości:
 
 ## Co zostaje takie samo
 
-Sam proces pisania (kolejność etapów, pisanie partiami, wstęp na końcu, redakcja i antyplagiat przed oddaniem) działa identycznie jak przy licencjacie. Jeśli chcesz odświeżyć tę bazę krok po kroku, opisaliśmy ją w [przewodniku po pracy licencjackiej](/blog/jak-napisac-prace-licencjacka/). A jeśli zastanawiasz się, czy w ogóle pisać magisterkę samodzielnie, [porównaliśmy dostępne drogi tutaj](/blog/samemu-zlecenie-czy-ai/).
+Sam proces pisania (kolejność etapów, pisanie partiami, wstęp na końcu, redakcja i antyplagiat przed oddaniem) działa identycznie jak przy licencjacie. Jeśli chcesz odświeżyć tę bazę krok po kroku, opisaliśmy ją w [przewodniku po pracy licencjackiej](/blog/jak-napisac-prace-licencjacka/). Szczegółowe poradniki metodologiczne pisane stricte pod magisterkę (wstęp, badania, bibliografia, obrona) znajdziesz z kolei na [praca-magisterska.pl/poradniki](https://praca-magisterska.pl/poradniki/). A jeśli zastanawiasz się, czy w ogóle pisać magisterkę samodzielnie, [porównaliśmy dostępne drogi tutaj](/blog/samemu-zlecenie-czy-ai/).
 
 ## Najczęstsze pytania
 
