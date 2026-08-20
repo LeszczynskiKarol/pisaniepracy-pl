@@ -1,6 +1,6 @@
 ---
 title: "Metodologia badań w pracy dyplomowej: metody, techniki, narzędzia"
-description: "Metoda, technika czy narzędzie? Jak dobrać badania ilościowe, jakościowe albo mieszane, wyznaczyć próbę i napisać rozdział metodologiczny, którego nie odrzuci promotor."
+description: "Metoda, technika czy narzędzie? Jak dobrać badania ilościowe lub jakościowe, wyznaczyć próbę i napisać rozdział metodologiczny, którego nie odrzuci promotor."
 pubDate: 2026-07-31
 cluster: "proces"
 author: "Redakcja pisaniepracy.pl"
